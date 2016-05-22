@@ -190,7 +190,8 @@ function selectionOnClick(info, tab) {
       break;
     }
   }
-  alert(raw + '   加密次数:' + times);
+  console.log('加密次数:' + times);
+  alert(raw);
 }
 
 var selection = chrome.contextMenus.create({"title": "Base64解码","contexts":["selection"],"onclick":selectionOnClick});
