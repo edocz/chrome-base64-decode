@@ -1,0 +1,10 @@
+{
+  "name": "Base64 Decode",
+  "description": "右键base64解码",
+  "version": "0.1",
+  "permissions": ["contextMenus", "tabs"],
+  "background": {
+    "scripts": ["menu.js"]
+  },
+  "manifest_version": 2
+}
