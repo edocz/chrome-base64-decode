@@ -1,4 +1,4 @@
-var maxDecodeTimes = 10;
+var maxDecodeTimes = 1000;
 var base64EncodeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 var base64DecodeChars = new Array(
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -157,14 +157,14 @@ function CharToHex(str) {
     i = 0;
     while(i < len)
     {
-	    c = str.charCodeAt(i++);
-	    h = c.toString(16);
-	    if(h.length < 2)
-	    	h = "0" + h;
+        c = str.charCodeAt(i++);
+        h = c.toString(16);
+        if(h.length < 2)
+            h = "0" + h;
 
-	    out += "\\x" + h + " ";
-	    if(i > 0 && i % 8 == 0)
-	    	out += "\r\n";
+        out += "\\x" + h + " ";
+        if(i > 0 && i % 8 == 0)
+            out += "\r\n";
     }
 
     return out;
@@ -180,14 +180,17 @@ function isBase64(str) {
 
 function selectionOnClick(info, tab) {
   var raw = info.selectionText;
+  var times = 0;
   for (var i=0; i < maxDecodeTimes; i++) {
     if (isBase64(raw)) {
       raw = utf8to16(base64decode(raw));
+      raw = raw.replace(/\s/g,"")
     } else {
+      times = i;
       break;
-    } 
+    }
   }
-  alert(raw);
+  alert(raw + '   加密次数:' + times);
 }
 
 var selection = chrome.contextMenus.create({"title": "Base64解码","contexts":["selection"],"onclick":selectionOnClick});
